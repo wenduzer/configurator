@@ -17,9 +17,8 @@ class EditConfigurationSubCategory extends React.Component {
 
 		_.each(fields, (fieldValue, fieldName) => {
 			fieldsDOMArray.push((
-				<Grid item xs={12}>
+				<Grid key={fieldName} item xs={12}>
 					<Field
-						key={fieldName}
 						id={fieldName}
 						name={`${subCategoryName}.${fieldName}`}
 						component={TextField}

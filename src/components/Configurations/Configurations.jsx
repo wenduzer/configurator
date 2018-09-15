@@ -8,7 +8,7 @@ import {
 import styles from './configurationsStyles';
 import Configuration from './Configuration/Configuration';
 
-class Settings extends React.Component {
+class Configurations extends React.Component {
 	state = {
 		'currentExpanded': null,
 	}
@@ -39,6 +39,7 @@ class Settings extends React.Component {
 
 			settingsDOMArray.push(
 				<Configuration
+					key={configurationName}
 					currentExpanded={currentExpanded}
 					onExpand={this.onExpand}
 					configurationName={configurationName}
@@ -66,4 +67,4 @@ class Settings extends React.Component {
 	}
 }
 
-export default withStyles(styles)(Settings);
+export default withStyles(styles)(Configurations);

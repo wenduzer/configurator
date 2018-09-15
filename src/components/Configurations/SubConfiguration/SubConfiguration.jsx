@@ -13,7 +13,7 @@ class SubConfiguration extends React.Component {
 			const value = isBool ? fieldValue.toString() : fieldValue;
 
 			dataDOMArray.push(
-				<Grid item xs={12}>
+				<Grid key={fieldName} item xs={12}>
 					<Typography
 						variant="subheading"
 						className={classes.tabbed}

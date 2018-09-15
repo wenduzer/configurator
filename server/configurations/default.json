@@ -1,12 +1,7 @@
 {
-	"settings1": {
-		"field1": "",
-		"field2": "",
-		"field3": true
-	},
-	"settings2": {
-		"field1": "",
-		"field2": "",
-		"field3": true
+	"subConfigurationName": {
+		"configuration1": "",
+		"configuration2": "",
+		"configuration3": ""
 	}
 }
