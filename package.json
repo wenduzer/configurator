@@ -57,7 +57,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "back": "nodemon server/server.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && mv build server",
+    "prod": "nodemon server/server.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
@@ -112,5 +113,6 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }

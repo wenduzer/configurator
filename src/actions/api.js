@@ -1,29 +1,21 @@
 import _ from 'lodash';
 import request from 'superagent';
 
-const config = {
-	'API': 'http://localhost:1337',
-};
-
-export const { API } = config;
-
 export const post = (url, data, cb) => {
-	const apiURL = `${API}/${url}`;
+	const apiURL = `/api/${url}`;
 
 	request
 		.post(apiURL)
-		// .withCredentials()
 		.send(data)
 		.end((err, res) => end(err, res, apiURL, cb));
 };
 
 export const get = (url, data, cb) => {
-	const apiURL = `${API}/${url}`;
+	const apiURL = `/api/${url}`;
 
 	request
 		.get(apiURL)
 		.query(data)
-		// .withCredentials()
 		.end((err, res) => end(err, res, apiURL, cb));
 };
 
@@ -51,8 +43,6 @@ export const handleServerResponse = (err, res) => {
 	} else if (!isSuccess) {
 		serverError = '1001';
 	}
-
-	// serverError = 49;
 
 	if (serverError) {
 		console.error(serverError);
