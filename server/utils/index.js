@@ -9,11 +9,18 @@ const fileToJSON = (configurationName) => {
 	return JSON.parse(contents);
 };
 
-const saveFile = (configurationName, data) => {
-	const filePath = `server/configurations/${configurationName}.json`;
+const saveFile = (configurationName, data, newConfigurationName) => {
+	const currentFilePath = `server/configurations/${configurationName}.json`;
 	const parsedData = JSON.stringify(data);
+	let finalFilePath = currentFilePath;
 
-	fs.writeFileSync(filePath, parsedData);
+	if (newConfigurationName) {
+		const newFilePath = `server/configurations/${newConfigurationName}.json`;
+		fs.renameSync(currentFilePath, newFilePath);
+		finalFilePath = newFilePath;
+	}
+
+	fs.writeFileSync(finalFilePath, parsedData);
 };
 
 const getAllFiles = () => {

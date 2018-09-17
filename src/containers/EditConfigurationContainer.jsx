@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { getJSON, saveJSON } from '../actions/appActions';
+import { saveJSON } from '../actions/appActions';
 import EditConfiguration from '../components/EditConfiguration/EditConfiguration';
 import withLoader from '../components/withLoader/withLoader';
 
@@ -17,12 +17,18 @@ class EditConfigurationContainer extends React.Component {
 	}
 
 	onSaveJSON = async (values, isNew) => {
-		const { 'saveJSON': action } = this.props;
-		let configurationName = this.getCurrentConfigurationName();
 		let finalValues = values;
+		let configurationName = this.getCurrentConfigurationName();
+
+		const { 'saveJSON': action, history } = this.props;
+		const editedConfigurationName = _.get(values, ['configurationName']);
 
 		if (isNew) {
 			configurationName = _.get(values, ['configurationName']);
+		}
+
+		if (editedConfigurationName !== configurationName) {
+			finalValues = _.set(values, ['editedConfigurationName'], editedConfigurationName);
 		}
 
 		finalValues = _.omit(values, ['configurationName']);
@@ -34,6 +40,10 @@ class EditConfigurationContainer extends React.Component {
 				isNew,
 				...finalValues,
 			});
+
+			if (editedConfigurationName) {
+				history.push(`/edit/${editedConfigurationName}`);
+			}
 		} catch (error) {
 			this.setError(true, error);
 		}
@@ -70,8 +80,13 @@ class EditConfigurationContainer extends React.Component {
 	}
 
 	getCurrentConfigurations = () => {
-		const { app } = this.props;
+		const { app, history } = this.props;
 		const currentConfigurationName = this.getCurrentConfigurationName();
+		const currentConfigurationData = _.get(app, [currentConfigurationName]);
+
+		if (!currentConfigurationData || _.isEmpty(currentConfigurationData)) {
+			history.push('/');
+		}
 
 		return _.get(app, [currentConfigurationName]);
 	}
@@ -105,7 +120,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({ getJSON, saveJSON }, dispatch);
+	return bindActionCreators({ saveJSON }, dispatch);
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditConfigurationContainer));

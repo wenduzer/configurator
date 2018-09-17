@@ -1,4 +1,4 @@
-import { GET_JSON, GET_CONFIGURATIONS } from '../constants';
+import { GET_CONFIGURATIONS } from '../constants';
 import { get, handleServerResponse, post } from './api';
 
 export const getConfigurations = () => {
@@ -19,13 +19,6 @@ export const getConfigurations = () => {
 			});
 		});
 	};
-};
-
-export const getJSON = data => (dispatch) => {
-	dispatch({
-		'type': GET_JSON,
-		'payload': data,
-	});
 };
 
 export const saveJSON = (configurationName, values) => {

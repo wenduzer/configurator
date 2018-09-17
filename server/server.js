@@ -33,15 +33,16 @@ app.get('/api/getJSON/:configurationName', (req, res) => {
 app.post('/api/saveJSON', (req, res) => {
 	const fileName = _.get(req, ['body', 'configurationName'], 'default');
 	const data = _.get(req, ['body', 'values']);
+	const editedConfigurationName = _.get(data, ['editedConfigurationName']);
 
-	if (fileName === 'default') {
+	if (fileName === 'default' || editedConfigurationName === 'default') {
 		res.send({
 			'isSuccess': false,
 			'errorCode': 'cantEditDefault',
 		});
 	} else {
-		const finalData = _.omit(data, ['isNew']);
-		utis.saveFile(fileName, finalData);
+		const finalData = _.omit(data, ['isNew', 'editedConfigurationName']);
+		utis.saveFile(fileName, finalData, editedConfigurationName);
 
 		res.send({
 			'isSuccess': true,

@@ -51,9 +51,15 @@ class EditConfiguration extends React.Component {
 					label="Configuration Name"
 				/>
 			);
+		} else {
+			return (
+				<Field
+					name="configurationName"
+					component={TextField}
+					label="Edit Configuration Name"
+				/>
+			);
 		}
-
-		return null;
 	}
 
 	render() {
@@ -81,9 +87,17 @@ class EditConfiguration extends React.Component {
 	}
 }
 
+const calculateConfigurationName = (configurationName) => {
+	if (configurationName) {
+		return configurationName === 'default' ? '' : configurationName;
+	}
+
+	return '';
+};
+
 const EditConfigurationWithForm = withFormik({
 	'mapPropsToValues': props => ({
-		'configurationName': '',
+		'configurationName': calculateConfigurationName(props.configurationName),
 		...props.data,
 	}),
 	'handleSubmit': (values, { props }) => {
